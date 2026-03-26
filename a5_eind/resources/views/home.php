@@ -1,1 +1,1 @@
-legend
+view text
