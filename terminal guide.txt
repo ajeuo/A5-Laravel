@@ -1,0 +1,9 @@
+Ik heb geen idee hoe ik de folder naam kan veranderen- krijg steeds de melding dat het folder al ingebruik is, 
+dus als je deze folder wil gebruiken in de terminal:
+
+1. cd versie
+	gebruik cd '(path)/A5 Laravel/a5_eind'
+	de quotes helpen met folders die een spatie hebben
+
+2. makkelijkste
+	rechter klik in de folder en klik op 'open in terminal'

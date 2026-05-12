@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('bands', function (Blueprint $table) {
             $table->id();
             $table->string('naam');
-            $table->text('beschrijving');
-            $table->text('biografie');
+            $table->text('beschrijving')->nullable();   
+            $table->text('biografie')->nullable();
             $table->string('foto')->nullable();
             $table->string('achtergrondkleur')->default('#ffffff');
             $table->string('tekstkleur')->default('#000000');
