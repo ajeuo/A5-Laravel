@@ -2,6 +2,7 @@
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Dashboard') }}
+            <a href="../" class="text-xs">- Home </a>
         </h2>
     </x-slot>
 
@@ -14,7 +15,9 @@
                         <a href="/bands/{{ $band->id }}">{{ $band->naam }}</a> <br>
                     @endforeach
 
-                </div>
+                    <br>
+                    <a href="/bands/create"> Create Band </a>
+                </div>  
             </div>
         </div>
     </div>

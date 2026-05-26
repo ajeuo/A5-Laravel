@@ -3,7 +3,13 @@
         @vite('resources/css/app.css')
     </head>
     <body>     
-        <a href="../">Home</a> <br>
+        <div style="display: flex; justify-content: flex-end; padding-right: 9px;">
+            @auth
+                <a href="/dashboard">Dashboard</a>
+            @else
+                <a href="/login">Login</a>
+            @endauth
+        </div>
 
         <form class="max-w-md mx-auto" method="GET" action="/">   
             <label for="search" class="block mb-2.5 text-sm font-medium text-heading sr-only ">Search</label>
@@ -27,9 +33,13 @@
             <tbody>
                 @foreach($bands as $band)
                     <tr>
-                        <td>{{ $band->foto }}</td>
+                        <td> <img src="{{ asset('storage/' . $band->foto) }}" alt="{{ $band->naam }}" width="100"> </td>
                         <td> <a href="/bands/{{ $band->id }}">{{ $band->naam }}</a> </td>
                         <td>{{ $band->beschrijving }}</td>
+                        
+                        @auth
+                            <a href="/bands/{{ $band->id }}/edit">Bewerken nmr: {{ $band->id }} </a>
+                        @endauth
                     </tr>
                 @endforeach
             </tbody>
