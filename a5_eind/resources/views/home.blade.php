@@ -1,49 +1,67 @@
 <html>
+    {{-- 
+        mb- / mt- = margin bottom / margin top
+        p- = padding.
+        w- / h- = width / height
+        cijfer value achter - is keer 4. dus h-16 = 64 pixels
+        mx-auto = Centreert een element in het midden van het scherm. 
+    --}}
+
     <head>
         @vite('resources/css/app.css')
     </head>
-    <body>     
-        <div style="display: flex; justify-content: flex-end; padding-right: 9px;">
+    <body class="bg-gray-100 p-6 font-sans">     
+        
+        <div class="flex justify-end gap-4">
             @auth
-                <a href="/dashboard">Dashboard</a>
+                <a href="/dashboard" class="text-blue-600 hover:underline">Dashboard</a>
             @else
-                <a href="/login">Login</a>
+                <a href="/login" class="text-blue-600 hover:underline">Login</a>
             @endauth
         </div>
 
-        <form class="max-w-md mx-auto" method="GET" action="/">   
-            <label for="search" class="block mb-2.5 text-sm font-medium text-heading sr-only ">Search</label>
-            <div class="relative">
-                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                    <svg class="w-4 h-4 text-body" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/></svg>
+        <form class="max-w-md mx-auto mb-12" method="GET" action="/">   
+            <label for="search" class="sr-only">Search</label>
+            <div class="flex items-center gap-2">
+                <div class="relative flex-1">
+                    <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                        <svg class="w-4 h-4 text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/></svg>
+                    </div>
+                    <input type="search" id="search" name="search" class="block w-full p-2 ps-9 bg-white border border-gray-300 text-sm rounded" placeholder="Search" />
                 </div>
-                <input type="search" id="search" name="search" class="block w-full p-3 ps-9 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body" placeholder="Search" required />
-                <button type="submit" class="absolute end-1.5 bottom-1.5 text-white bg-brand hover:bg-brand-strong box-border border border-transparent focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded text-xs px-3 py-1.5 focus:outline-none">Search</button>
+                <button type="submit" class="bg-blue-600 text-white font-medium text-sm rounded px-4 py-2 hover:bg-blue-700">Search</button>
             </div>
         </form>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Foto</th>
-                    <th>Naam</th>
-                    <th>Beschrijving</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($bands as $band)
-                    <tr>
-                        <td> <img src="{{ asset('storage/' . $band->foto) }}" alt="{{ $band->naam }}" width="100"> </td>
-                        <td> <a href="/bands/{{ $band->id }}">{{ $band->naam }}</a> </td>
-                        <td>{{ $band->beschrijving }}</td>
-                        
-                        @auth
-                            <a href="/bands/{{ $band->id }}/edit">Bewerken nmr: {{ $band->id }} </a>
-                        @endauth
+        <div class="max-w-4xl mx-auto bg-white rounded shadow p-4">
+            <table class="w-full text-left">
+                <thead>
+                    <tr class="border-b-2 border-gray-200 text-gray-700">
+                        <th class="pb-3">Foto</th>
+                        <th class="pb-3">Naam</th>
+                        <th class="pb-3">Beschrijving</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
-
+                </thead>
+                <tbody>
+                    @foreach($bands as $band)
+                        <tr class="border-b border-gray-100 hover:bg-gray-50">
+                            <td class="py-3"> 
+                                <img src="{{ asset('storage/' . $band->foto) }}" alt="{{ $band->naam }}" class="w-16 h-16 object-cover rounded"> 
+                            </td>
+                            <td class="py-3 font-semibold text-blue-600 hover:underline"> 
+                                <a href="/bands/{{ $band->id }}">{{ $band->naam }}</a> 
+                            </td>
+                            <td class="py-3 text-gray-600">{{ $band->beschrijving }}</td>
+                            
+                            @auth
+                                <td class="py-3 text-right">
+                                    <a href="/bands/{{ $band->id }}/edit" class="text-green-600 hover:underline">Bewerken</a>
+                                </td>
+                            @endauth
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </body>
 </html>
