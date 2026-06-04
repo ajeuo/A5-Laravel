@@ -1,3 +1,10 @@
+{{-- 
+    px- / py- = padding horizontaal / padding verticaal ( dus ook mx- / my- )
+    gap- = tussenruimte tussen elementen die naast elkaar staan
+    justify-between = duwt het eerste element helemaal naar links en het tweede element helemaal naar rechts
+    divide-y = zet automatisch een horizontale streep
+--}}
+
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">

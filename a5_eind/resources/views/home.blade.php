@@ -1,4 +1,13 @@
 <html>
+    {{-- 
+        mb- / mt- = margin bottom / margin top
+        p- = padding.
+        
+        w- / h- = width / height
+        cijfer value achter - is keer 4. dus h-16 = 64 pixels
+        mx-auto = Centreert een element in het midden van het scherm. 
+    --}}
+
     <head>
         @vite('resources/css/app.css')
     </head>
