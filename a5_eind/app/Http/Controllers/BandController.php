@@ -14,8 +14,9 @@ class BandController extends Controller
         $bands = collect();
 
         if ($request->filled('search')) {
-            //sql 
             $bands = Band::where('naam', 'like', '%' . $searchReq . '%')->get();
+        } else {
+            $bands = Band::all();
         }
 
         return view('home', ['bands' => $bands]);
