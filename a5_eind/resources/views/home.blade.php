@@ -12,7 +12,7 @@
     </head>
     <body class="bg-gray-100 p-6 font-sans">     
         
-        <div class="flex justify-end gap-4">
+        <div class="flex justify-end gap-4 mb-6">
             @auth
                 <a href="/dashboard" class="text-blue-600 hover:underline">Dashboard</a>
             @else
@@ -20,7 +20,7 @@
             @endauth
         </div>
 
-        <form class="max-w-md mx-auto mb-12" method="GET" action="/">   
+        <form class="max-w-md mx-auto mb-8" method="GET" action="/">   
             <label for="search" class="sr-only">Search</label>
             <div class="flex items-center gap-2">
                 <div class="relative flex-1">
@@ -53,11 +53,11 @@
                             </td>
                             <td class="py-3 text-gray-600">{{ $band->beschrijving }}</td>
                             
-                            @auth
+                            {{-- @auth
                                 <td class="py-3 text-right">
                                     <a href="/bands/{{ $band->id }}/edit" class="text-green-600 hover:underline">Bewerken</a>
                                 </td>
-                            @endauth
+                            @endauth --}}
                         </tr>
                     @endforeach
                 </tbody>

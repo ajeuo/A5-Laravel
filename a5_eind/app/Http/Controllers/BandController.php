@@ -19,7 +19,6 @@ class BandController extends Controller
             $bands = Band::all();
         }
 
-
         return view('home', ['bands' => $bands]);
     }
 
