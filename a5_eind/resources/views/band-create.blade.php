@@ -1,57 +1,95 @@
 <html>
     <head>
-
+        @vite('resources/css/app.css')
     </head>
-    <body>
-        <a href="javascript:history.back()">Go Back</a>
+    <body class="bg-gray-100 p-6 font-sans">
         
-        <form method="POST" enctype="multipart/form-data" action="/bands">
-            @csrf
-            
-            <input type="text" name="naam" value="">
-            <select name="genre_id">
-                @foreach($genres as $genre)
-                    <option value="{{ $genre->id }}">{{ $genre->naam }}</option>
-                @endforeach
-            </select>
+        <div class="max-w-2xl mx-auto mb-4">
+            <a href="javascript:history.back()" class="text-blue-600 hover:underline text-sm">← Go Back</a>
+        </div>
+        
+        <div class="max-w-2xl mx-auto bg-white rounded shadow p-6">
+            <h2 class="text-xl font-bold mb-6 text-gray-800">Nieuwe Band Toevoegen</h2>
 
-            <textarea name="beschrijving"></textarea>
-            <textarea name="biografie"></textarea>
+            <form method="POST" enctype="multipart/form-data" action="/bands">
+                @csrf
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Band Naam</label>
+                    <input type="text" name="naam" class="border border-gray-300 rounded p-2 text-sm w-full" placeholder="Bijv. The Beatles">
+                </div>
 
-            <input type="file" name="foto" id="foto" onchange="checkFotoSize(this)">
-            <p id="foto-status">Geen foto gekozen.</p>
-            <img id="foto-preview" src="" width="100" style="display:none;">
+                <div class="mb-4">
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Genre</label>
+                    <select name="genre_id" class="border border-gray-300 rounded p-2 text-sm w-full bg-white">
+                        @foreach($genres as $genre)
+                            <option value="{{ $genre->id }}">{{ $genre->naam }}</option>
+                        @endforeach
+                    </select>
+                </div>
 
-            <script>
-            function checkFotoSize(input) {
-                if (input.files[0].size > 8388608) {
-                    alert('Foto is te groot! Maximum is 8MB.');
-                    input.value = '';
-                    document.getElementById('foto-status').textContent = 'Geen foto gekozen.';
-                    document.getElementById('foto-preview').style.display = 'none';
-                } else {
-                    document.getElementById('foto-status').textContent = 'Gekozen: ' + input.files[0].name;
-                    
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        const preview = document.getElementById('foto-preview');
-                        preview.src = e.target.result;
-                        preview.style.display = 'block';
+                <div class="mb-4">
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Korte Beschrijving</label>
+                    <textarea name="beschrijving" rows="3" class="border border-gray-300 rounded p-2 text-sm w-full" placeholder="Waar is de band bekend van?"></textarea>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Biografie</label>
+                    <textarea name="biografie" rows="5" class="border border-gray-300 rounded p-2 text-sm w-full" placeholder="Het volledige verhaal van de band..."></textarea>
+                </div>
+
+                <div class="mb-4 border-t border-b border-gray-100 py-4">
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Band Foto (Max 8MB)</label>
+                    <input type="file" name="foto" id="foto" onchange="checkFotoSize(this)" class="text-sm text-gray-600">
+                    <p id="foto-status" class="text-xs text-gray-500 italic mt-1">Geen foto gekozen.</p>
+                    <img id="foto-preview" src="" class="w-32 h-32 object-cover rounded border border-gray-200 mt-2" style="display:none;">
+                </div>
+
+                <script>
+                function checkFotoSize(input) {
+                    if (input.files[0].size > 8388608) {
+                        alert('Foto is te groot! Maximum is 8MB.');
+                        input.value = '';
+                        document.getElementById('foto-status').textContent = 'Geen foto gekozen.';
+                        document.getElementById('foto-preview').style.display = 'none';
+                    } else {
+                        document.getElementById('foto-status').textContent = 'Gekozen: ' + input.files[0].name;
+                        
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            const preview = document.getElementById('foto-preview');
+                            preview.src = e.target.result;
+                            preview.style.display = 'block';
+                        }
+                        reader.readAsDataURL(input.files[0]);
                     }
-                    reader.readAsDataURL(input.files[0]);
                 }
-            }
-            </script>
+                </script>
 
-            <input type="text" name="videos[]" placeholder="YouTube URL 1">
-            <input type="text" name="videos[]" placeholder="YouTube URL 2">
-            <input type="text" name="videos[]" placeholder="YouTube URL 3">
+                <div class="mb-4">
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">YouTube Video's</label>
+                    <input type="text" name="videos[]" placeholder="YouTube URL 1" class="border border-gray-300 rounded p-2 text-sm w-full mb-2">
+                    <input type="text" name="videos[]" placeholder="YouTube URL 2" class="border border-gray-300 rounded p-2 text-sm w-full mb-2">
+                    <input type="text" name="videos[]" placeholder="YouTube URL 3" class="border border-gray-300 rounded p-2 text-sm w-full">
+                </div>
 
-            <input type="color" name="achtergrondkleur" value="{{ $band->achtergrondkleur ?? '#ffffff' }}">
-            <input type="color" name="tekstkleur" value="{{ $band->tekstkleur ?? '#000000' }}">
+                <div class="flex gap-4 border-t border-gray-100 pt-4 mb-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Achtergrondkleur</label>
+                        <input type="color" name="achtergrondkleur" value="{{ $band->achtergrondkleur ?? '#ffffff' }}" class="w-10 h-10 border border-gray-300 rounded">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Tekstkleur</label>
+                        <input type="color" name="tekstkleur" value="{{ $band->tekstkleur ?? '#000000' }}" class="w-10 h-10 border border-gray-300 rounded">
+                    </div>
+                </div>
 
-
-            <br> <button type="submit">Opslaan</button>
-        </form>
+                <div class="text-right">
+                    <button type="submit" class="bg-blue-600 text-white text-sm rounded px-6 py-2 hover:bg-blue-700">
+                        Opslaan
+                    </button>
+                </div>
+            </form>
+        </div>
     </body>
 </html>
