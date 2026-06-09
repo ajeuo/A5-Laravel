@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 
 class BandController extends Controller
 {
+    // zoek functie
     public function index(Request $request) {
 
         $searchReq = $request->input('search');
@@ -22,11 +23,13 @@ class BandController extends Controller
         return view('home', ['bands' => $bands]);
     }
 
+    // geeft bands aan view
     public function show($id) {
         $band = Band::findOrFail($id);
         return view('band', ['band' => $band]);
     }
 
+    // edit pagina
     public function edit($id) {
         $band = Band::findOrFail($id);
         $genres = \App\Models\Genre::all();
@@ -72,6 +75,7 @@ class BandController extends Controller
             }
         }
 
+        // voeg mail toe van andere gebruiker
         if ($request->filled('gebruiker_toevoegen')) {
             $gebruiker = \App\Models\User::where('email', $request->input('gebruiker_toevoegen'))->first();
             if ($gebruiker) {
@@ -83,15 +87,18 @@ class BandController extends Controller
     }
 
     public function dashboard() {
+        // show bands in dashboard
         $bands = auth()->user()->bands;
         return view('dashboard', ['bands' => $bands]);
     }
 
+    // create pagina
     public function create() {
         $genres = \App\Models\Genre::all();
         return view('band-create', ['genres' => $genres]);
     }
 
+    // maakt band info aan
     public function store(Request $request) {
         $request->validate([
             'foto' => 'nullable|image|max:8192',

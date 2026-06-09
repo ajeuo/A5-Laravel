@@ -1,7 +1,9 @@
 <html>
     {{-- 
+        m- = margin
         mb- / mt- = margin bottom / margin top
         p- = padding.
+        py - px = padding verticaal / padding horizontaal
         w- / h- = width / height
         cijfer value achter - is keer 4. dus h-16 = 64 pixels
         mx-auto = Centreert een element in het midden van het scherm. 
@@ -13,6 +15,7 @@
     <body class="bg-gray-100 p-6 font-sans">     
         
         <div class="flex justify-end gap-4 mb-6">
+            {{-- laat alleen dashboard link zien als je bent ingelogd. anders login link --}}
             @auth
                 <a href="/dashboard" class="text-blue-600 hover:underline">Dashboard</a>
             @else
@@ -20,6 +23,7 @@
             @endauth
         </div>
 
+        {{-- zoekbalk --}}
         <form class="max-w-md mx-auto mb-8" method="GET" action="/">   
             <label for="search" class="sr-only">Search</label>
             <div class="flex items-center gap-2">
@@ -33,6 +37,7 @@
             </div>
         </form>
 
+        {{-- tabbel met alle bands --}}
         <div class="max-w-4xl mx-auto bg-white rounded shadow p-4">
             <table class="w-full text-left">
                 <thead>
